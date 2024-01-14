@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from core.views import homeView
 from statistical.views import statisticalView
-from bruteforce.views import bruteforceView
+from bruteforce.views import bruteforceView, word_count_json_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',  homeView.as_view() , name='home'),
     path('statistic/', statisticalView.as_view(), name='statisticalView'),
-    path('bruteforce/', bruteforceView.as_view(), name='bruteforceView')
+    path('bruteforce/', bruteforceView.as_view(), name='bruteforceView'),
+    path('word-count-json/', word_count_json_view, name='word-count-json'),
 ]

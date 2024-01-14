@@ -21,6 +21,11 @@
     </style>
 </head>
 <body>
-    Bruteforce mock page
+    <form method="post">
+        {% csrf_token %}
+        <label for="url">Enter a URL:</label>
+        <input type="text" id="url" name="url">
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
