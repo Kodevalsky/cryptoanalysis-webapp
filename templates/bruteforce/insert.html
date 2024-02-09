@@ -1,31 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
+    <!-- Include Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        <label for="url">Enter a URL:</label>
-        <input type="text" id="url" name="url">
-        <button type="submit">Submit</button>
-    </form>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="flex flex-col items-center justify-center h-screen">
+        <p class="text-gray-700 text-xl font-bold mb-5 w-2/5 text-center">This application allows you to create a word cloud from a website.
+            You may choose to upload a .txt file with words to exclude from the word cloud.
+        </p>
+        <form method='post' onsubmit="return checkURL()" enctype="multipart/form-data">
+            <div class="w-full max-w-lg">
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" >
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="url" class="block text-gray-700 text-sm font-bold mb-2">
+                            Enter a URL:
+                        </label>
+                        <input type="text" id="url" name="url" 
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                            placeholder="https://example.com">
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button type="submit" 
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full max-w-lg">
+                <div class="grid grid-cols-1 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center">
+                    <div class="block text-gray-700 text-sm font-bold mb-5">Upload a .txt file with words to exclude:</div>
+                    <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="file" id="exclusion_file" name="exclusion_file" accept=".txt">
+                </div>
+            </div>
+            <div class="w-full max-w-lg">
+                <div class="grid grid-cols-1 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center">
+                    <div class="block text-gray-700 text-sm font-bold mb-5">Specify the minimum word length:</div>
+                    <div class="flex items-center">
+                        <div class="flex-1 mr-4">
+                          <input name='wordLength' id='wordLength'type="range" min="0" max="20" value="4" class="range-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        </div>
+                        <div class="w-12 text-center">
+                          <span id="rangeValue" class="text-gray-700 dark:text-gray-300">4</span>
+                        </div>
+                      </div> 
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function checkURL() {
+            var urlInput = document.getElementById('url').value;
+            if (urlInput.trim() === '') {
+                alert('The URL box is empty. Please enter a URL.');
+                return false; // Prevent form submission
+            }
+            return true;
+        }
+    </script>
+    <script>
+        const rangeSlider = document.querySelector('.range-slider');
+        const rangeValue = document.getElementById('rangeValue');
+      
+        rangeSlider.addEventListener('input', () => {
+          rangeValue.textContent = rangeSlider.value;
+        });
+      </script>
 </body>
 </html>

@@ -1,26 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
+    <!-- Include Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    Statistical Mock page
+<body class="bg-gray-100 p-8 mt-20">
+
+    <form method='post' onsubmit='return checkIfEmpty()'>
+        {% csrf_token %} 
+        <div class="max-w-4xl mx-auto">
+            <p class="text-gray-700 text-xl font-bold mb-5">This tool helps you analyze the relationship between original text and its cyphertext to find the key of the cipher used. Enter both the original text and the cyphertext in the respective fields and submit them to see the analysis.</p>
+
+            <div class="mb-6">
+                <label for="originalText" class="block text-sm font-medium text-gray-700 mb-2">Original Text</label>
+                <textarea id="originalText" name="originalText" rows="4" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+
+            <div class="mb-6">
+                <label for="ciphertext" class="block text-sm font-medium text-gray-700 mb-2">Ciphertext</label>
+                <textarea id="ciphertext" name="ciphertext" rows="4" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+
+            <button type="submit" class="mt-7 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Analyze Texts
+            </button>
+        </div>
+    </form>
 </body>
+    <script>
+        function checkIfEmpty(){
+            var originalText = document.getElementById('originalText').value;
+            var ciphertext = document.getElementById('ciphertext').value;
+            if(originalText == "" || ciphertext == ""){
+                alert("Please fill in both fields");
+                return false;
+            }
+            if(originalText.length != ciphertext.length){
+                alert("The length of the original text and the ciphertext must be the same");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script>
+        function toggleSlider() {
+            var checkbox = document.getElementById('customLengthCheckbox');
+            var slider = document.getElementById('customLengthSlider');
+            if (checkbox.checked) {
+                slider.style.display = 'block';
+            } else {
+                slider.style.display = 'none';
+            }
+        }
+    
+        function updateSliderValue(value) {
+            document.getElementById('sliderValue').innerText = value;
+        }
+    </script>
 </html>

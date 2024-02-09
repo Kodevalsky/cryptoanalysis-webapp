@@ -5,9 +5,13 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="flex justify-center items-center h-screen">
-        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2" href='{% url 'bruteforceView' %}'>Dictionary Generator</a>
-        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2" href='{% url  'statisticalView' %}'>Statistical Cipher Analysis</a>
+    <div class="flex justify-center items-center h-screen flex-col">
+        <h1 class="text-4xl font-bold mb-8">Welcome to the Cryptography Tool</h1>
+        <p class="text-xl mb-10">Please choose an option available below</p> <!-- Added line -->
+        <div class="justify-center items-center">
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2 text-lg" href='{% url 'bruteforceView' %}'>Dictionary Generator</a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2 text-lg" href='{% url  'statisticalView' %}'>Statistical Cipher Analysis</a>
+        </div>
     </div>
 </body>
 </html>

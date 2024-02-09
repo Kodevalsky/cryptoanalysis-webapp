@@ -26,4 +26,5 @@ urlpatterns = [
     path('statistic/', statisticalView.as_view(), name='statisticalView'),
     path('bruteforce/', bruteforceView.as_view(), name='bruteforceView'),
     path('word-count-json/', word_count_json_view, name='word-count-json'),
+    path('keypairs/', statisticalView.as_view(), name='keypairs')
 ]

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keypair Analysis Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Keypair Analysis Results</h1>
+        <p class="mb-6 text-gray-600">Below are the found keypairs and the counts of each keypair occurring in the text-cyphertext combination, along with the probability of each keypair being correct:</p>
+
+        <div class="overflow-x-auto bg-white shadow rounded-lg">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left py-3 px-5 font-semibold text-gray-600">Original Character</th>
+                        <th class="text-left py-3 px-5 font-semibold text-gray-600">Cyphertext Character</th>
+                        <th class="text-left py-3 px-5 font-semibold text-gray-600">Count</th>
+                        <th class="text-left py-3 px-5 font-semibold text-gray-600">Probability</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    {% for keypair, count, probability in keypair_data %}
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-2 px-5">{{ keypair.0 }}</td>
+                            <td class="py-2 px-5">{{ keypair.1 }}</td>
+                            <td class="py-2 px-5">{{ count }}</td>
+                            <td class="py-2 px-5">{{ probability|floatformat:2 }} %</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

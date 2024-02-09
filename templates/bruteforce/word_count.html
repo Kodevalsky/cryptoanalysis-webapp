@@ -3,13 +3,41 @@
 <head>
     <title>Word Count</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- Include Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Your existing styles */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+        }
+        .chart-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
-<body>
-    <h1 class="chart-title">Top 15 Word Frequencies</h1>
-    <div id="chart"></div>
+<body class="bg-gray-100">
+    <h1 class="chart-title mt-10">Top 15 Word Frequencies</h1>
+    <div class="chart-container">
+        <div id="chart"></div>
+    </div>
+
+    <!-- Tailwind CSS button styling -->
+    <div class="flex justify-center space-x-4 mt-8">
+        <button onclick="downloadJson()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Download JSON
+        </button>
+        <button onclick="downloadTxt()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Download TXT
+        </button>
+    </div>
+
+    <div class="flex justify-center">
+        <p class="text-gray-700 text-xl font-bold w-3/5 text-center	mt-10">Above is a chart which displays the 15 most frequent words in the text. Below the chart there are two buttons which allow you to download the data in JSON or TXT format.
+            The JSON contains the word and its frequency, while the TXT contains only the words, sorted from the most frequent to the least frequent.
+        </p>
+    </div>
 
     <script>
         const data = JSON.parse('{{ word_count|safe }}');
@@ -69,8 +97,17 @@
             downloadAnchorNode.click();
             downloadAnchorNode.remove();
         }
+
+        function downloadTxt() {
+            const wordList = data.map(d => d[0]).join('\n'); // Create a string with each word in its own row
+            const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(wordList);
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "word_list.txt");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
     </script>
-    
-    <button onclick="downloadJson()">Download JSON</button>
 </body>
 </html>
